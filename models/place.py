@@ -88,5 +88,4 @@ class Place(BaseModel, Base):
             for review in all_reviews.values():
                 if review.place_id == self.id:
                     place_reviews.append(review)
-
             return place_reviews

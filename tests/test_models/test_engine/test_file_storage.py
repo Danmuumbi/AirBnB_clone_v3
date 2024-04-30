@@ -31,14 +31,14 @@ class TestFileStorageDocs(unittest.TestCase):
         """Set up for the doc tests"""
         cls.fs_f = inspect.getmembers(FileStorage, inspect.isfunction)
 
-    def test_pep8_conformance_file_storage(self):
+    def test_pycode_conformance_file_storage(self):
         """Test that models/engine/file_storage.py conforms to PEP8."""
         pycode_s = pycodestyle.StyleGuide(quiet=True)
         result = pycode_s.check_files(['models/engine/file_storage.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
-    def test_pep8_conformance_test_file_storage(self):
+    def test_pycode_conformance_test_file_storage(self):
         """Test tests/test_models/test_file_storage.py conforms to PEP8."""
         pycode_s = pycodestyle.StyleGuide(quiet=True)
         result = pycode_s.check_files(['tests/test_models/test_engine/\

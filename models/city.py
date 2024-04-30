@@ -25,8 +25,7 @@ class City(BaseModel, Base):
         @property
         def places(self):
             """
-            getter for places
-            :return: list of places in that city
+            getter for places return: list of places in that city
             """
             all_places = models.storage.all("Place")
 

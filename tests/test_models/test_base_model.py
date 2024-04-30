@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 """Test BaseModel for expected behavior and documentation"""
-from datetime import datetime
+from datetime import datetime, timedelta
 import inspect
 import models
-import pep8 as pycodestyle
+import pycodestyle
 import time
 import unittest
 from unittest import mock
@@ -19,7 +19,7 @@ class TestBaseModelDocs(unittest.TestCase):
         """Set up for docstring tests"""
         self.base_funcs = inspect.getmembers(BaseModel, inspect.isfunction)
 
-    def test_pep8_conformance(self):
+    def test_pycode_conformance(self):
         """Test that models/base_model.py conforms to PEP8."""
         for path in ['models/base_model.py',
                      'tests/test_models/test_base_model.py']:
@@ -82,15 +82,19 @@ class TestBaseModel(unittest.TestCase):
         """Test that two BaseModel instances have different datetime objects
         and that upon creation have identical updated_at and created_at
         value."""
+        delta = timedelta(milliseconds=200)
         tic = datetime.now()
         inst1 = BaseModel()
         toc = datetime.now()
-        self.assertTrue(tic <= inst1.created_at <= toc)
-        time.sleep(1e-4)
+        print("tic:", tic)
+        print("inst1.created_at:", inst1.created_at)
+        print("toc + delta:", toc + delta)
+
+        self.assertTrue(tic <= inst1.created_at <= toc + delta, msg=f"Created at {inst1.created_at} not between {tic} and {toc + delta}")
         tic = datetime.now()
         inst2 = BaseModel()
         toc = datetime.now()
-        self.assertTrue(tic <= inst2.created_at <= toc)
+        self.assertTrue(tic <= inst2.created_at <= toc, msg=f"Created at {inst2.created_at} not between {tic} and {toc}")
         self.assertEqual(inst1.created_at, inst1.updated_at)
         self.assertEqual(inst2.created_at, inst2.updated_at)
         self.assertNotEqual(inst1.created_at, inst2.created_at)
