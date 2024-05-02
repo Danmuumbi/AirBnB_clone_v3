@@ -85,10 +85,6 @@ class DBStorage:
             for class_name in classes.values():
                 count += self.__session.query(class_name).count()
             return count
-        # if cls:
-        #     return self.session.query(cls).count()
-        # else:
-        #     return self.session.query(Base).count()
 
     def reload(self):
         """reloads data from the database"""
