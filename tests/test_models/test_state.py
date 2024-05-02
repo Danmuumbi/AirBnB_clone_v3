@@ -20,17 +20,17 @@ class TestStateDocs(unittest.TestCase):
         """Set up for the doc tests"""
         cls.state_f = inspect.getmembers(State, inspect.isfunction)
 
-    def test_pycode_conformance_state(self):
+    def test_pep8_conformance_state(self):
         """Test that models/state.py conforms to PEP8."""
-        pycode_s = pycodestyle.StyleGuide(quiet=True)
-        result = pycode_s.check_files(['models/state.py'])
+        pep8s = pycodestyle.StyleGuide(quiet=True)
+        result = pep8s.check_files(['models/state.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
-    def test_pycode_conformance_test_state(self):
+    def test_pep8_conformance_test_state(self):
         """Test that tests/test_models/test_state.py conforms to PEP8."""
-        pycode_s = pycodestyle.StyleGuide(quiet=True)
-        result = pycode_s.check_files(['tests/test_models/test_state.py'])
+        pep8s = pycodestyle.StyleGuide(quiet=True)
+        result = pep8s.check_files(['tests/test_models/test_state.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 

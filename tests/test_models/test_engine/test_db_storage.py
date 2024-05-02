@@ -31,17 +31,17 @@ class TestDBStorageDocs(unittest.TestCase):
         """Set up for the doc tests"""
         cls.dbs_f = inspect.getmembers(DBStorage, inspect.isfunction)
 
-    def test_pycode_conformance_db_storage(self):
+    def test_pep8_conformance_db_storage(self):
         """Test that models/engine/db_storage.py conforms to PEP8."""
-        pycode_s = pycodestyle.StyleGuide(quiet=True)
-        result = pycode_s.check_files(['models/engine/db_storage.py'])
+        pep8s = pycodestyle.StyleGuide(quiet=True)
+        result = pep8s.check_files(['models/engine/db_storage.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
-    def test_pycode_conformance_test_db_storage(self):
+    def test_pep8_conformance_test_db_storage(self):
         """Test tests/test_models/test_db_storage.py conforms to PEP8."""
-        pycode_s = pycodestyle.StyleGuide(quiet=True)
-        result = pycode_s.check_files(['tests/test_models/test_engine/\
+        pep8s = pycodestyle.StyleGuide(quiet=True)
+        result = pep8s.check_files(['tests/test_models/test_engine/\
 test_db_storage.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
@@ -80,13 +80,26 @@ class TestDBStorage(unittest.TestCase):
     def test_all_no_class(self):
         """Test that all returns all rows when no class is passed"""
 
+
+
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_new(self):
         """test that new adds an object to the database"""
+        # initial_count = len(models.storage.all(State))
+        # new_state = State(name="Test State")
+        # models.storage.new(new_state)
+        # models.storage.save()
+        # self.assertEqual(len(models.storage.all(State)), initial_count + 1)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+        # new_state = State(name="Save Test State")
+        # models.storage.new(new_state)
+        # models.storage.save()
+        # models.storage.reload()
+        # saved_state = models.storage.get(State, new_state.id)
+        # self.assertIsNotNone(saved_state)
 
 class TestGetCountMethods(unittest.TestCase):
     def setUp(self):
@@ -114,3 +127,7 @@ class TestGetCountMethods(unittest.TestCase):
         self.assertEqual(storage.count(State), initial_count + 1)
         storage.delete(new_state)
         storage.save()
+
+
+if __name__ == '__main__':
+    unittest.main()
