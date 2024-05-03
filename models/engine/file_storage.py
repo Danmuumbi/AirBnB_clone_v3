@@ -42,9 +42,15 @@ class FileStorage:
     
     def get(self, cls, id):
         """Return an object based on the class name and its ID."""
-        key = "{}.{}".format(cls.__name__, id) if isinstance(cls, type) else "{}.{}".format(cls, id)
+        if isinstance(cls, type):
+            key = "{}.{}".format(cls.__name__, id)
+        else:
+            key = "{}.{}".format(cls, id)
         return self.__objects.get(key)
-
+    # def get(self, cls, id):
+    #     """Return an object based on the class name and its ID."""
+    #     key = "{}.{}".format(cls.__name__, id) if isinstance(cls, type) else "{}.{}".format(cls, id)
+    #     return self.__objects.get(key)
 
     def save(self):
         """serializes __objects to the JSON file (path: __file_path)"""
@@ -95,7 +101,6 @@ class FileStorage:
     #             if cls_name in k
     #         })
     #     return len(self.__objects)
-
 
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""

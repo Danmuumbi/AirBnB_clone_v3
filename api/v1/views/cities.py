@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""Import modules"""
 from flask import jsonify, request, abort
 from models.city import City
 from models.state import State
