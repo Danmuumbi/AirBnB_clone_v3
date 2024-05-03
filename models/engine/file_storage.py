@@ -42,8 +42,9 @@ class FileStorage:
     
     def get(self, cls, id):
         """Return an object based on the class name and its ID."""
-        key = f"{cls.__name__}.{id}" if isinstance(cls, type) else f"{cls}.{id}"
+        key = "{}.{}".format(cls.__name__, id) if isinstance(cls, type) else "{}.{}".format(cls, id)
         return self.__objects.get(key)
+
 
     def save(self):
         """serializes __objects to the JSON file (path: __file_path)"""
@@ -77,11 +78,24 @@ class FileStorage:
         """
         if cls:
             cls_name = cls.__name__ if isinstance(cls, type) else cls
-            return len({
-                k: v for k, v in self.__objects.items()
-                if cls_name in k
-            })
+            # Using dictionary comprehension to filter __objects by class name.
+            filtered_dict = {k: v for k, v in self.__objects.items() if cls_name in k}
+            return len(filtered_dict)
         return len(self.__objects)
+    
+    # def count(self, cls=None):
+    #     """
+    #     Return the count of objects in storage or count of specified
+    #     class.
+    #     """
+    #     if cls:
+    #         cls_name = cls.__name__ if isinstance(cls, type) else cls
+    #         return len({
+    #             k: v for k, v in self.__objects.items()
+    #             if cls_name in k
+    #         })
+    #     return len(self.__objects)
+
 
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
