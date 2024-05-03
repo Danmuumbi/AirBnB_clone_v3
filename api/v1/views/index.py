@@ -1,36 +1,19 @@
-#!/usr/bin/python3
-"""
-index
-"""
-
-from flask import jsonify
-from api.v1.views import app_views
-
+from flask import jsonify, Blueprint
 from models import storage
+
+app_views = Blueprint('index', __name__, url_prefix='/api/v1')
 
 
 @app_views.route("/status", methods=['GET'], strict_slashes=False)
 def status():
-    """
-    status route
-    :return: response with json
-    """
-    data = {
-        "status": "OK"
-    }
-
-    resp = jsonify(data)
-    resp.status_code = 200
-
-    return resp
+    """Return a JSON response with status "OK"."""
+    data = {"status": "OK"}
+    return jsonify(data), 200
 
 
 @app_views.route("/stats", methods=['GET'], strict_slashes=False)
 def stats():
-    """
-    stats of all objs route
-    :return: json of all objs
-    """
+    """Return a JSON response with counts of each object type."""
     data = {
         "amenities": storage.count("Amenity"),
         "cities": storage.count("City"),
@@ -39,8 +22,4 @@ def stats():
         "states": storage.count("State"),
         "users": storage.count("User"),
     }
-
-    resp = jsonify(data)
-    resp.status_code = 200
-
-    return resp
+    return jsonify(data), 200
