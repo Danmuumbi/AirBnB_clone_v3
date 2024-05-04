@@ -60,7 +60,6 @@ class FileStorage:
         if cls and id:
             if cls in classes.values():
                 obj = self.all(cls)
-                print('This is my obj')
                 for key, value in obj.items():
                     if key.split('.')[1] == id:
                         return value
