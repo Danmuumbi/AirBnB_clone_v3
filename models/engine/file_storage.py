@@ -40,17 +40,39 @@ class FileStorage:
             return new_dict
         return self.__objects
     
-    def get(self, cls, id):
-        """Return an object based on the class name and its ID."""
-        if isinstance(cls, type):
-            key = "{}.{}".format(cls.__name__, id)
-        else:
-            key = "{}.{}".format(cls, id)
-        return self.__objects.get(key)
+    # def get(self, cls, id):
+    #     """Return an object based on the class name and its ID."""
+    #     if isinstance(cls, type):
+    #         key = "{}.{}".format(cls.__name__, id)
+    #     else:
+    #         key = "{}.{}".format(cls, id)
+    #     return self.__objects.get(key)
+
     # def get(self, cls, id):
     #     """Return an object based on the class name and its ID."""
     #     key = "{}.{}".format(cls.__name__, id) if isinstance(cls, type) else "{}.{}".format(cls, id)
     #     return self.__objects.get(key)
+
+    def get(self, cls, id):
+        """ a function used to retrive and object
+            based on its class name and id.
+        """
+        if cls and id:
+            if cls in classes.values():
+                obj = self.all(cls)
+                print('This is my obj')
+                for key, value in obj.items():
+                    if key.split('.')[1] == id:
+                        return value
+        return None
+
+    def count(self, cls=None):
+        """ a function that returns number of object for a given class
+            if no class is given, number of all objects
+        """
+        if cls and cls not in classes.values():
+            return None
+        return (len(self.all(cls)) if cls else len(self.all()))
 
     def save(self):
         """serializes __objects to the JSON file (path: __file_path)"""
@@ -77,17 +99,17 @@ class FileStorage:
         except Exception:
             pass
 
-    def count(self, cls=None):
-        """
-        Return the count of objects in storage or count of specified
-        class.
-        """
-        if cls:
-            cls_name = cls.__name__ if isinstance(cls, type) else cls
-            # Using dictionary comprehension to filter __objects by class name.
-            filtered_dict = {k: v for k, v in self.__objects.items() if cls_name in k}
-            return len(filtered_dict)
-        return len(self.__objects)
+    # def count(self, cls=None):
+    #     """
+    #     Return the count of objects in storage or count of specified
+    #     class.
+    #     """
+    #     if cls:
+    #         cls_name = cls.__name__ if isinstance(cls, type) else cls
+    #         # Using dictionary comprehension to filter __objects by class name.
+    #         filtered_dict = {k: v for k, v in self.__objects.items() if cls_name in k}
+    #         return len(filtered_dict)
+    #     return len(self.__objects)
     
     # def count(self, cls=None):
     #     """

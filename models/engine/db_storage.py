@@ -64,27 +64,47 @@ class DBStorage:
                     new_dict[key] = obj
         return (new_dict)
     
+    # def get(self, cls, id):
+    #     """Return an object based on the class name and its ID."""
+    #     if cls:
+    #         cls = classes[cls] if isinstance(cls, str) else cls
+    #         result = self.__session.query(cls).filter(cls.id == id).first()
+    #         return result
+    #     return None
+
+    # def count(self, cls=None):
+    #     """
+    #     Return the count of objects in storage or count of specified
+    #     class.
+    #     """
+    #     if cls:
+    #         cls = classes[cls] if isinstance(cls, str) else cls
+    #         return self.__session.query(cls).count()
+    #     else:
+    #         count = 0
+    #         for class_name in classes.values():
+    #             count += self.__session.query(class_name).count()
+    #         return count
+
     def get(self, cls, id):
-        """Return an object based on the class name and its ID."""
-        if cls:
-            cls = classes[cls] if isinstance(cls, str) else cls
-            result = self.__session.query(cls).filter(cls.id == id).first()
-            return result
+        """ a function used to retrive and object
+            based on its class name and id.
+        """
+        if cls and id:
+            if cls in classes.values():
+                obj = self.all(cls)
+                for key, value in obj.items():
+                    if key.split('.')[1] == id:
+                        return value
         return None
 
     def count(self, cls=None):
+        """ a function that returns number of object for a given class
+            if no class is given, number of all objects
         """
-        Return the count of objects in storage or count of specified
-        class.
-        """
-        if cls:
-            cls = classes[cls] if isinstance(cls, str) else cls
-            return self.__session.query(cls).count()
-        else:
-            count = 0
-            for class_name in classes.values():
-                count += self.__session.query(class_name).count()
-            return count
+        if cls and cls not in classes.values():
+            return None
+        return (len(self.all(cls)) if cls else len(self.all()))
 
     def reload(self):
         """reloads data from the database"""
